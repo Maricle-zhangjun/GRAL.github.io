@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRAL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', Times, serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0 auto;
+            background-color: #f8f9fa;
+        }
+        
+        header {
+            background-color: #ffffff;
+            padding: 60px 0; /* 增加顶部留白 */
+            text-align: center;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .title-text {
+            text-align: center;
+            font-size: 2.6rem;
+            font-weight: bold;
+            color: #1E98DA;
+            line-height: 1.5;
+            padding: 20px 0 0 0;
+            margin: 0 0 4px 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0px;
+            color: #1E98DA;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .video-gallery {
+            margin-top: 0px;
+        }
+        
+        .video-row {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+        
+        .video-card {
+            width: 30%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .video-container video {
+            width: 100%;
+            border-radius: 15px;
+            display: block;
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .play-button:before {
+            content: "";
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 15px solid #333;
+            margin-left: 5px;
+        }
+        
+        .video-title {
+            font-size: 0.9rem;
+            margin: 15px;
+            text-align: center;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .btn-control {
+            background: #5BC4EA;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn-control:hover {
+            background: #4AA8D1;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin: 0px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .video-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .video-card {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+        .feature {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .feature-icon {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color:#C79472
+        }
+        
+        .feature-text {
+            flex: 1;
+        }
+        
+        .feature-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color:#333
+        }
+        
+        .feature-text p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .buttons {
+            margin-top: 30px;
+        }
+        
+        .footer {
+            padding: 40px 0;
+            background-color: #fff;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            width: 30%;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0px;
+            color: #333;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-section ul li a {
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .footer-section ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        .date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .hero {
+            padding: 20px 0;
+        }
+        
+        .hero-body {
+            padding: 40px 0;
+        }
+        
+        .columns {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .column {
+            flex: 1;
+            padding: 0 15px;
+        }
+        
+        .has-text-centered {
+            text-align: center;
+        }
+        
+        .image-viewport {
+            max-width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .image-viewport img {
+            max-width: 90%;
+            height: auto;
+            margin-top: 00px;
+        }
+        
+        .image-viewport2 img {
+            max-width: 90%;
+            height: auto;
+            margin-top: 0px;
+            margin-bottom: 24px; /* 增加图片下方留白 */
+            /* margin-left: -110px; */
+        }
+
+        .publication-authors {
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        .author-block {
+            margin-right: 5px;
+        }
+        
+        .link-block {
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #0077cc;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .external-link {
+            text-decoration: none;
+        }
+        
+        .icon {
+            margin-right: 5px;
+        }
+        
+        video {
+            width: 100%;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        hr {
+            border: 0;
+            height: 1px;
+            background: #eee;
+            margin: 30px 0;
+        }
+        
+        .title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .is-size-6 {
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            .header-text, .header-image {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .header-image {
+                margin-top: 30px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+        
+        .bib-citation {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+
+        .bib-citation h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .publication-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .external-link {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .external-link:hover {
+            opacity: 0.8;
+        }
+        
+        .icon {
+            margin-right: 5px;
+        }
+        .custom-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #2c2c2c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-link i {
+    font-size: 1.1rem;
+}
+
+.btn-link:hover {
+    background-color: #444;
+    text-decoration: none;
+}
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div style="width: 100vw;">
+        <header>
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered", style="background-color: #ffffff;">
+                        <div class="title-text">
+                            <p class="title-text">Generalizable and Robust Affordance Learning<br>for Robotic Garment Manipulation under Background Camouflage</p>
+                        </div>
+                        <!-- <div class="image-viewport2">
+                            <img width="75%" src="static/imgs/title_large.png" alt="Robotic Visual Instruction">
+                        </div> -->
+                        <h1 class="title is-4 conference-authors">
+                            <a target="_blank" href="", style="color: #333;">
+                                Submitted to IEEE Transactions on Robotics
+                            </a>
+                        </h3>
+                        <!-- <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                <a target="_blank" rel="noopener noreferrer" href="https://maricle-zhangjun.github.io/">Jun Zhang</a><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a target="_blank" rel="noopener noreferrer" href="#">Wenshuo Han</a><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a target="_blank" rel="noopener noreferrer" href="#">Zhouyu Wang</a><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a target="_blank" rel="noopener noreferrer" href="#">Xingyu Zhu</a><sup>*</sup><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a target="_blank" rel="noopener noreferrer" href="#">Yixing Gao</a><sup>*</sup><sup>1</sup>
+                            </span> 
+                            <br>
+                            <span class="author-block">
+                                <a target="_blank" rel="noopener noreferrer" href="#">Guangping Bai</a><sup>6</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a target="_blank" rel="noopener noreferrer" href="#">Xianzheng Ma</a><sup>6</sup>,
+                            </span>
+                        </div> -->
+                        <!-- <p style="font-size: 1rem; margin-top: 5px;">*Corresponding Author</p>
+                        
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>Jilin University</span>
+                            <span class="author-block"><sup>2</sup>Shanghai AI Laboratory</span>
+                            <br>
+                            <span class="author-block"><sup>3</sup>UCSD</span>
+                            <span class="author-block"><sup>4</sup>VIVO</span>
+                            <span class="author-block"><sup>5</sup>South China University of Technology</span>
+                            <span class="author-block"><sup>6</sup>Independent Researcher</span>
+                        </div> -->
+                        
+                        <div class="custom-buttons">
+                            <a href="#" class="btn-link" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Paper
+                            </a>
+                            <a href="#" class="btn-link" target="_blank">
+                            <i class="fas fa-code-branch"></i> arXiv
+                            </a>
+                            <a href="#" class="btn-link" target="_blank">
+                            <i class="fab fa-github"></i> Code (Coming Soon)
+                            </a>
+                            <a href="#" class="btn-link" target="_blank">
+                            <i class="fas fa-database"></i> Dataset
+                            </a>
+                            <!-- <a href="rovi_supp.pdf" class="btn-link" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Supp
+                            </a> -->
+                        </div>
+                            
+                        <br>
+                        <br>
+                        
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div class="container is-max-widescreen" style="padding: 0px; margin-top: 20px;">
+        <video controls style="width: 100%; border-radius: 15px; aspect-ratio: 16/9; background-color: #666;">
+            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/GRAL_Video.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div style="width: 100vw; background-color: #ffffff;">
+        <div class="container" style="background-color: #ffffff;">
+            <h1 class="title is-4 has-text-left has-text-weight-bold" style="padding-top: 20px;">Motivation</h1>
+            <div class="image-viewport" style="display: flex; justify-content: center;">
+                <img src="static/imgs/motivation.png" style="text-align: center; width: 100%;">   
+            </div>
+            <p class="is-size-6 has-text-left" style="margin-top: 10px;">
+                Figure 1. Existing affordance models relying on RGB observations fail under background camouflage and often lead to unstable grasps when selecting maximum-affordance points. 
+                In contrast, our model integrates depth-based geometric information and employs an affordance-guided manipulation strategy, enabling robust affordance perception and stable garment manipulation.
+            </p>
+            <br>
+            <h1 class="title is-4 has-text-left has-text-weight-bold">Abstract</h1>
+            <p class="is-size-5 has-text-left">
+                Robotic garment manipulation under background camouflage remains challenging, as garments often share similar colors and textures with their surrounding environment, leading to severe visual ambiguity and unreliable perception. 
+                While affordance learning provides a promising paradigm for inferring actionable regions, existing methods typically rely on large-scale annotations and struggle to generalize to unseen garments. 
+                To address this limitation, we adopt a <strong>one-shot affordance learning paradigm</strong> to enable data-efficient generalization. 
+                However, accurate affordance prediction alone is insufficient for reliable garment manipulation, as traditional methods directly selecting the maximum affordance point without considering geometric feasibility often results in unstable grasps, especially on local flat garment regions. 
+                Therefore, we further design an <strong>affordance-guided manipulation strategy</strong> that incorporates geometric awareness to ensure physically feasible and stable execution. 
+                Building upon these insights, we propose a <strong>Generalizable and Robust Affordance Learning (GRAL) framework </strong>for robotic garment manipulation that integrates robust action primitive affordance learning with geometry-aware manipulation strategy, and further construct a Sim-Garment dataset with diverse garment categories and complex background textures to support systematic evaluation. 
+                Extensive experiments in both simulation and real-world settings demonstrate that our method significantly improves robustness and generalization, achieving average success rates of 74.29% and 65.71% for garment manipulation tasks. 
+                Code and Dataset will be open-sourced after the paper is accepted.
+            </p>
+            <br>
+            <h1 class="title is-4 has-text-left has-text-weight-bold">Overview of GRAL framework</h1>
+            <div class="image-viewport" style="display: flex; justify-content: center;">
+                <img src="static/imgs/overview.png" style="width: 100%;">   
+            </div>
+            <p class="is-size-6 has-text-left" style="margin-top: 10px;">
+                Figure 2. Overview of the proposed GRAL framework. Given RGB-D input, OS-APAL learns multimodal representations through geometric-semantic fusion and action prompt-driven feature alignment, enabling robust affordance prediction under background camouflage. 
+                Based on the predicted affordance, the affordance-guided manipulation strategy further incorporates geometric cues to refine candidate grasp regions and select stable grasp points, which are then transformed into executable robot actions for reliable garment manipulation across diverse tasks through composing predefined action primitives.
+            </p>
+            <br>
+            <h1 class="title is-4 has-text-left has-text-weight-bold">Sim-Garment Dataset</h1>
+            <div class="image-viewport" style="display: flex; justify-content: center;">
+                <img src="static/imgs/dataset.png" style="width: 100%;">   
+            </div>
+            <p class="is-size-6 has-text-left" style="margin-top: 10px;">
+                Figure 3. Sim-Garment Dataset. (i) Dataset Collection: diverse garment meshes and textures are randomly rendered with backgrounds to simulate complex garments under background camouflage, followed by multi-angle egocentric RGB-D acquisition. 
+                (ii) Dataset Annotation: semantic regions are manually labeled using SAM based on predefined action primitives, and Gaussian heatmaps are generated from region centroids as ground-truth affordance maps. 
+                (iii) Statistical Analysis: (a) Example RGB-D samples with diverse garments and background textures. (b) Overview of garment categories and action primitives. (c) Word cloud analysis of action primitives. (d) Garment meshes statistics across categories. (e) Correlation between affordances and garments.
+            </p>
+            <br>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="video-gallery">
+            <h2 class="section-title" style="border-bottom-width:0px; padding-top: 40px;">Simulator Experiment of Garment Manipulation Tasks</h2>
+            
+            <div class="video-row">
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/sim1.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fold Shirt</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/sim2.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fold Trousers</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/sim3.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Clip Gloves</div>
+                </div>
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/sim4.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fold Trousers</div>
+                </div>
+            </div>
+            
+            <div class="video-row">
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/sim5.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Hang Hat</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/sim6.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fling T-Shirt</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/sim7.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Hang Sweatshirt</div>
+                </div>
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/sim8.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fling Trousers</div>
+                </div>
+            </div>
+        </div>
+        <!-- <a style="color: #333;"> *ROVI only takes visual input, without using language instructions.  </a> -->
+        <p class="is-size-6 has-text-left" style="margin-top: 20px;">
+            
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="video-gallery">
+            <h2 class="section-title" style="border-bottom-width:0px; padding-top: 40px;">Real-World Experiment of Garment Manipulation Tasks</h2>
+            
+            <div class="video-row">
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/real1.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fold T-Shirt</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/real2.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fold Vest</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/real3.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fold Sweater</div>
+                </div>
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/real4.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Hang Hat</div>
+                </div>
+            </div>
+            
+            <div class="video-row">
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/real5.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fold Sweatshirt</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/real6.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fold Shorts</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/real7.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Fling Sweater</div>
+                </div>
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/real8.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Clip Gloves</div>
+                </div>
+            </div>
+        </div>
+        <!-- <a style="color: #333;"> *ROVI only takes visual input, without using language instructions.  </a> -->
+        <p class="is-size-6 has-text-left" style="margin-top: 20px;">
+            
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="video-gallery">
+            <h2 class="section-title" style="border-bottom-width:0px; padding-top: 40px;">Failure Cases Analysis in Simulator and Real-World Experiments</h2>
+            
+            <div class="video-row">
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/fail1.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Grasp_Shoulder Dress</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/fail2.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Grasp_Sleeve T-Shirt</div>
+                </div>
+                
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/fail3.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Grasp_Shoulder T-Shirt</div>
+                </div>
+
+                <div class="video-card", style="width: 23%;">
+                    <div class="video-container">
+                        <video>
+                            <source src="https://github.com/Maricle-zhangjun/GRAL/releases/download/demo/fail4.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-button" onclick="playVideo(this)"></div>
+                    </div>
+                    <div class="video-title">Grasp_Sleeve Sweatshirt</div>
+                </div>
+            </div>
+
+        <!-- <a style="color: #333;"> *ROVI only takes visual input, without using language instructions.  </a> -->
+        <p class="is-size-6 has-text-left" style="margin-top: 20px;">
+            
+        </p>
+    </div>
+
+    <!-- <div style="width: 100vw; background-color: #ffffff; padding-bottom: 20px; padding-top: 20px;">
+    
+        <div class="container">
+            <div class="bib-citation">
+                <h3>BibTeX</h3>
+                <code>
+                    @article{li2025robotic,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;title={Robotic Visual Instruction},<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;author={Li, Yanbang and Gong, Ziyang and Li, Haoyang and Huang, Xiaoqi and Kang, Haolan and Bai, Guangping and Ma, Xianzheng},<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;booktitle={arXiv preprint arXiv:2505.00693},<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;year={2025},<br>
+                    }
+                </code>
+            </div>
+        </div> -->
+    </div>
+
+
+    <script>
+        function playVideo(playButton) {
+            const videoContainer = playButton.closest('.video-container');
+            const video = videoContainer.querySelector('video');
+            
+            if (video.paused) {
+                video.play();
+                playButton.style.display = 'none';
+            } else {
+                video.pause();
+                playButton.style.display = 'flex';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.play-button')) {
+                const activeVideo = e.target.closest('.video-container').querySelector('video');
+                document.querySelectorAll('video').forEach(video => {
+                    if (video !== activeVideo && !video.paused) {
+                        video.pause();
+                        video.closest('.video-container').querySelector('.play-button').style.display = 'flex';
+                    }
+                });
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded successfully');
+        });
+    </script>
+</body>
+</html>
